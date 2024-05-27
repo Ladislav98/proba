@@ -6,6 +6,7 @@ function Header() {
     <header className="bg-yellow-500">
       <Link to="/">Order Pizza</Link>
       <SearchOrder />
+      <p>hello</p>
     </header>
   );
 }

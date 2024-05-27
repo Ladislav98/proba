@@ -6,9 +6,11 @@ import AppLayout from "./ui/AppLayout";
 function App() {
   return (
     <>
-      <AppLayout />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<AppLayout />}>
+          <Route index element={<Home />} />
+          <Route path="/cart" element={<p>Cart</p>} />
+        </Route>
       </Routes>
     </>
   );
