@@ -1,12 +1,15 @@
 import { Link } from "react-router-dom";
-import SearchOrder from "../order/SearchOrder";
+import SearchOrder from "../features/order/SearchOrder";
+import Username from "../features/user/Username";
 
 function Header() {
   return (
-    <header className="bg-yellow-500">
-      <Link to="/">Order Pizza</Link>
+    <header className="flex items-center justify-between px-4 py-3 uppercase bg-yellow-400 border-b border-stone-200 sm:px-6">
+      <Link className="tracking-widest" to="/">
+        Order Pizza
+      </Link>
       <SearchOrder />
-      <p>hello</p>
+      <Username />
     </header>
   );
 }
