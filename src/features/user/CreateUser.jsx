@@ -7,7 +7,7 @@ function CreateUser() {
   return (
     <form>
       <p className="mb-4 text-sm text-stone-600 md:text-base">
-        Welcome 🍕! Please start by telling us your name:
+        Welcome 👋! Please start by telling us your name:
       </p>
       <input
         type="text"

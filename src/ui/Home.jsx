@@ -4,10 +4,10 @@ function Home() {
   return (
     <div className="px-4 my-10 text-center sm:my-16">
       <h1 className="mb-8 text-xl text-semibold md:text-3xl">
-        The best pizza
+        Your Local shop.
         <br />
         <span className="text-yellow-500">
-          Baked for you. With purpose for you 🔥
+          Here for you. Quicky and easy 🔥
         </span>
       </h1>
 
