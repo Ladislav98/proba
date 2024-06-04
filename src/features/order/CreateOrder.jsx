@@ -15,7 +15,7 @@ function CreateOrder() {
         Ready to order? Let&apos;s go!
       </h2>
 
-      <form method="POST">
+      <form method="POST" action="/order/new">
         <div className="flex flex-col gap-2 mb-5 sm:flex-row sm:items-center">
           <label className="sm:basis-40">First Name</label>
           <input type="text" name="customer" required className="input grow" />

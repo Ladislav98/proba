@@ -1,21 +1,14 @@
-import { useQuery } from "@tanstack/react-query";
 import MenuItem from "./MenuItem";
 import Loader from "../../ui/Loader";
-import { getProducts } from "../../api/api";
+import { useMenu } from "./useMenu";
 
 function Menu() {
-  const {
-    data: products,
-    error,
-    isLoading,
-  } = useQuery({
-    queryKey: ["products"],
-    queryFn: getProducts,
-  });
+  const { products, isLoading } = useMenu();
 
   if (isLoading) {
     return <Loader />;
   }
+
   return (
     <ul className="divide-y divide-stone-200">
       {products
