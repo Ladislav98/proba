@@ -2,6 +2,7 @@ import { useState } from "react";
 import Button from "../../ui/Button";
 import { useForm } from "react-hook-form";
 import { useCreateOrder } from "./useCreateOrder";
+import { useSelector } from "react-redux";
 
 const isValidPhone = (str) =>
   /^\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/.test(
@@ -9,6 +10,7 @@ const isValidPhone = (str) =>
   );
 
 function CreateOrder() {
+  const username = useSelector((state) => state.user.username);
   const [withPriority, setWithPriority] = useState(false);
   const { orderCreate } = useCreateOrder();
 
@@ -43,7 +45,13 @@ function CreateOrder() {
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col gap-2 mb-5 sm:flex-row sm:items-center">
           <label className="sm:basis-40">First Name</label>
-          <input type="text" name="customer" required className="input grow" />
+          <input
+            type="text"
+            name="customer"
+            required
+            className="input grow"
+            defaultValue={username}
+          />
         </div>
 
         <div className="flex flex-col gap-2 mb-5 sm:flex-row sm:items-center">
