@@ -1,12 +1,13 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createOrder } from "../../api/api";
-import { redirect } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export function useCreateOrder() {
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
   const {
-    mutate,
+    mutate: orderCreate,
     isLoading: isCreating,
     reset,
   } = useMutation({
@@ -14,9 +15,9 @@ export function useCreateOrder() {
     onSuccess: (newOrder) => {
       queryClient.invalidateQueries({ queryKey: ["orders"] });
       reset();
-      redirect(`/order/${newOrder.id}`);
+      navigate(`/order/${newOrder.id}`);
     },
   });
 
-  return { mutate, isCreating };
+  return { orderCreate, isCreating };
 }

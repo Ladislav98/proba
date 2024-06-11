@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Button from "../../ui/Button";
 import { useForm } from "react-hook-form";
+import { useCreateOrder } from "./useCreateOrder";
 
 const isValidPhone = (str) =>
   /^\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/.test(
@@ -9,11 +10,27 @@ const isValidPhone = (str) =>
 
 function CreateOrder() {
   const [withPriority, setWithPriority] = useState(false);
+  const { orderCreate } = useCreateOrder();
 
   const { register, handleSubmit, reset } = useForm();
 
   function onSubmit(data) {
+    const order = {
+      customer: "Jonas",
+      ...data,
+      // cart: [
+      //   {
+      //     pizzaId: 1,
+      //     name: "Margherita Pizza",
+      //     quantity: 2,
+      //     unitPrice: 10,
+      //     totalPrice: 20,
+      //   },
+      // ],
+    };
     console.log(data);
+    console.log(order);
+    orderCreate(order);
   }
 
   return (
@@ -39,9 +56,9 @@ function CreateOrder() {
               className="w-full input"
               {...register("phone")}
             />
-            <p className="p-2 mt-2 text-xs text-red-700 bg-red-100 rounded-md">
+            {/* <p className="p-2 mt-2 text-xs text-red-700 bg-red-100 rounded-md">
               phone
-            </p>
+            </p> */}
           </div>
         </div>
 
@@ -73,7 +90,6 @@ function CreateOrder() {
         </div>
 
         <div>
-          <input type="hidden" name="cart" />
           <input type="hidden" name="position" />
           <Button type="primary">Order now</Button>
         </div>
