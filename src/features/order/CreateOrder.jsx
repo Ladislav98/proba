@@ -3,6 +3,7 @@ import Button from "../../ui/Button";
 import { useForm } from "react-hook-form";
 import { useCreateOrder } from "./useCreateOrder";
 import { useSelector } from "react-redux";
+import { getCart } from "../cart/cartSlice";
 
 const isValidPhone = (str) =>
   /^\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/.test(
@@ -13,6 +14,7 @@ function CreateOrder() {
   const username = useSelector((state) => state.user.username);
   const [withPriority, setWithPriority] = useState(false);
   const { orderCreate } = useCreateOrder();
+  const cart = useSelector(getCart);
 
   const { register, handleSubmit, reset } = useForm();
 
@@ -20,18 +22,15 @@ function CreateOrder() {
     const order = {
       customer: "Jonas",
       ...data,
-      // cart: [
-      //   {
-      //     pizzaId: 1,
-      //     name: "Margherita Pizza",
-      //     quantity: 2,
-      //     unitPrice: 10,
-      //     totalPrice: 20,
-      //   },
-      // ],
+      priority: withPriority,
+      cart: cart.map((item) => ({
+        pizzaId: item.productId,
+        name: item.name,
+        quantity: item.quantity,
+        unitPrice: item.unitPrice,
+        totalPrice: item.totalPrice,
+      })),
     };
-    console.log(data);
-    console.log(order);
     orderCreate(order);
   }
 
