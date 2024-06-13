@@ -15,12 +15,13 @@ function CreateOrder() {
   const [withPriority, setWithPriority] = useState(false);
   const { orderCreate } = useCreateOrder();
   const cart = useSelector(getCart);
+  const customer = useSelector((state) => state.user.username);
 
   const { register, handleSubmit, reset } = useForm();
 
   function onSubmit(data) {
     const order = {
-      customer: "Jonas",
+      customer,
       ...data,
       priority: withPriority,
       cart: cart.map((item) => ({
