@@ -27,6 +27,11 @@ const cartSlice = createSlice({
 
       item.quantity--;
       item.totalPrice = item.quantity * item.unitPrice;
+
+      if (item.quantity === 0)
+        state.cart = state.cart.filter(
+          (item) => item.productId !== action.payload
+        );
     },
     clearCart(state) {
       state.cart = [];

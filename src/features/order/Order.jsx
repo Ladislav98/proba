@@ -58,7 +58,7 @@ function Order() {
       </div>
 
       <div>
-        <p>Price pizza: {formatCurrency(orderPrice)}</p>
+        <p>Price product: {formatCurrency(orderPrice)}</p>
         {priority && <p>Price priority: {formatCurrency(priorityPrice)}</p>}
         <p>To pay on delivery: {formatCurrency(orderPrice + priorityPrice)}</p>
       </div>

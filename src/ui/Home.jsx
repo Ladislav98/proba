@@ -11,7 +11,7 @@ function Home() {
         Your Local shop.
         <br />
         <span className="text-yellow-500">
-          Here for you. Quicky and easy 🔥
+          Here for you. Quick and easy order🔥
         </span>
       </h1>
       {username === "" ? (
