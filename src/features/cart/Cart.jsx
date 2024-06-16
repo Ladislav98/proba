@@ -1,16 +1,14 @@
 import LinkButton from "../../ui/LinkButton";
 import Button from "../../ui/Button";
 import { useDispatch, useSelector } from "react-redux";
-import { clearCart, getCart, getTotalCartPrice } from "./cartSlice";
+import { clearCart, getCart } from "./cartSlice";
 import CartItem from "./CartItem";
 import EmptyCart from "./EmptyCart";
-import { formatCurrency } from "../../utils/helpers";
 
 function Cart() {
   const username = useSelector((state) => state.user.username);
   const cart = useSelector(getCart);
   const dispatch = useDispatch();
-  const totalPrice = useSelector(getTotalCartPrice);
 
   if (!cart.length) return <EmptyCart />;
 
