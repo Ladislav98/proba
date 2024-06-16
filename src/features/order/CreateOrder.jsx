@@ -115,7 +115,7 @@ function CreateOrder() {
             name="priority"
             id="priority"
             disabled={isCreating}
-            className="w-6 h-6 accent-yellow-400 focus:outline-none focus:ring focus:ring-yellow-400 focus:ring-offset-2"
+            className="w-6 h-6 accent-pink-400 focus:outline-none focus:ring focus:ring-pink-400 focus:ring-offset-2"
             value={withPriority}
             {...register("priority")}
             onChange={(e) => setWithPriority(e.target.checked)}

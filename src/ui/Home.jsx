@@ -10,7 +10,7 @@ function Home() {
       <h1 className="mb-8 text-xl text-semibold md:text-3xl">
         Your Local shop.
         <br />
-        <span className="text-yellow-500">
+        <span className="text-pink-500">
           Here for you. Quick and easy order🔥
         </span>
       </h1>
