@@ -7,6 +7,7 @@ import Cart from "./features/cart/Cart";
 import Menu from "./features/menu/Menu";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import Order from "./features/order/Order";
+import PageNotFound from "./ui/PageNotFound";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/order/new" element={<CreateOrder />} />
           <Route path="/order/:orderId" element={<Order />} />
         </Route>
+        <Route path="*" element={<PageNotFound />} />
       </Routes>
     </>
   );

@@ -3,8 +3,9 @@ import Button from "../../ui/Button";
 import { useForm } from "react-hook-form";
 import { useCreateOrder } from "./useCreateOrder";
 import { useSelector } from "react-redux";
-import { getCart } from "../cart/cartSlice";
+import { getCart, getTotalCartPrice } from "../cart/cartSlice";
 import EmptyCart from "../cart/EmptyCart";
+import { formatCurrency } from "../../utils/helpers";
 
 const isValidPhone = (str) =>
   /^\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/.test(
@@ -14,11 +15,16 @@ const isValidPhone = (str) =>
 function CreateOrder() {
   const username = useSelector((state) => state.user.username);
   const [withPriority, setWithPriority] = useState(false);
-  const { orderCreate } = useCreateOrder();
+  const { orderCreate, isCreating } = useCreateOrder();
   const cart = useSelector(getCart);
   const customer = useSelector((state) => state.user.username);
 
-  const { register, handleSubmit, reset } = useForm();
+  const { register, handleSubmit, formState } = useForm();
+  const { errors, isSubmitting } = formState;
+
+  const totalCartPrice = useSelector(getTotalCartPrice);
+  const priorityPrice = withPriority ? totalCartPrice * 0.2 : 0;
+  const totalPrice = totalCartPrice + priorityPrice;
 
   function onSubmit(data) {
     const order = {
@@ -36,8 +42,11 @@ function CreateOrder() {
     orderCreate(order);
   }
 
+  function onError(errors) {
+    // console.log(errors);
+  }
+
   if (!cart.length) return <EmptyCart />;
-  console.log(cart);
 
   return (
     <div className="px-4 py-6">
@@ -45,7 +54,7 @@ function CreateOrder() {
         Ready to order? Let&apos;s go!
       </h2>
 
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit, onError)}>
         <div className="flex flex-col gap-2 mb-5 sm:flex-row sm:items-center">
           <label className="sm:basis-40">First Name</label>
           <input
@@ -64,12 +73,19 @@ function CreateOrder() {
               type="tel"
               name="phone"
               required
+              disabled={isCreating}
               className="w-full input"
-              {...register("phone")}
+              {...register("phone", {
+                required: "This field is required",
+                validate: (value) =>
+                  isValidPhone(value) || "Invalid phone number",
+              })}
             />
-            {/* <p className="p-2 mt-2 text-xs text-red-700 bg-red-100 rounded-md">
-              phone
-            </p> */}
+            {errors?.phone?.message && (
+              <p className="p-2 mt-2 text-xs text-red-700 bg-red-100 rounded-md">
+                {errors?.phone?.message}
+              </p>
+            )}
           </div>
         </div>
 
@@ -79,9 +95,17 @@ function CreateOrder() {
             <input
               type="text"
               name="address"
+              required
+              disabled={isCreating}
               {...register("address", { required: "This field is required" })}
               className="w-full input"
             />
+
+            {/* {errors?.address && (
+              <p className="p-2 mt-2 text-xs text-red-700 bg-red-100 rounded-md">
+                {errors?.address?.message}
+              </p>
+            )} */}
           </div>
         </div>
 
@@ -90,6 +114,7 @@ function CreateOrder() {
             type="checkbox"
             name="priority"
             id="priority"
+            disabled={isCreating}
             className="w-6 h-6 accent-yellow-400 focus:outline-none focus:ring focus:ring-yellow-400 focus:ring-offset-2"
             value={withPriority}
             {...register("priority")}
@@ -101,8 +126,12 @@ function CreateOrder() {
         </div>
 
         <div>
-          <input type="hidden" name="position" />
-          <Button type="primary">Order now</Button>
+          {/* <input type="hidden" name="position" /> */}
+          <Button type="primary" disabled={isSubmitting}>
+            {isSubmitting
+              ? "Placing order..."
+              : `Order now for ${formatCurrency(totalPrice)}`}
+          </Button>
         </div>
       </form>
     </div>
